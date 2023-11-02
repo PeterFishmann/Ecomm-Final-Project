@@ -2,7 +2,8 @@
 class UserController extends Controller{
     public function index(){
         if(isset($_SESSION['username'])){
-            $this->view('user/index');
+            $User = $this->model('user')->find($_SESSION['id']);
+            $this->view('user/index',['users'=>$User]);
         }else{
             header("location: /user/login");
         }
@@ -22,6 +23,7 @@ class UserController extends Controller{
             $this->view('user/login');
         }
     }
+
 
     public function loginEmail(){
         if(isset($_POST['loginEmail'])){
@@ -56,11 +58,14 @@ class UserController extends Controller{
         if(isset($_POST['register'])){
             $newUser = $this->model('User');
             $theUser = $newUser->findUsername($_POST['username']);
-            $theUser = $newUser->findEmail($_POST['email']);
-            if($theUser == null && $_POST['password'] == $_POST['Confpassword']){
+            $theUser1 = $newUser->findEmail($_POST['email']);
+            if($theUser == null && $theUser1 == null && $_POST['password'] == $_POST['Confpassword']){
                 if(!empty($_POST)){
                     $newUser->username = $_POST['username'];
                     $newUser->email = $_POST['email'];
+                    $newUser->phone = $_POST['phone'];
+                    $newUser->fname = $_POST['fname'];
+                    $newUser->lname = $_POST['lname'];
                     $newUser->password = password_hash($_POST['password'],PASSWORD_DEFAULT);
                     $newUser->create();
                     header('location:/user/login');

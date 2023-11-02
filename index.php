@@ -1,4 +1,5 @@
 <?php
+require "phpqrcode/qrlib.php";
 require_once 'dbConn.php';
 session_start();
 class App{

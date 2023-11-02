@@ -22,15 +22,15 @@
         <label>year:</label><br>
         <input type="text" name="year" value="<?= $data->year?>"><br>
         <label>distance:</label><br>
-        <input type="text" name="dist" value="<?= $data->dist_traveled?>"><br>
+        <input type="text" name="dist" value="<?= $data->distance?>"><br>
         <label>price:</label><br>
         <input type="text" name="price" value="<?= $data->price?>"><br>
         <label>exterior color:</label><br>
-        <input type="text" name="ext" value="<?= $data->ext_color?>"><br>
+        <input type="text" name="ext" value="<?= $data->ext_col?>"><br>
         <label>interior color:</label><br>
-        <input type="text" name="int" value="<?= $data->int_color?>"><br>
-        <label>VIN:</label><br>
-        <input type="text" name="vin" value="<?= $data->VIN?>"><br>
+        <input type="text" name="int" value="<?= $data->int_col?>"><br>
+        <label>Features:</label><br>
+        <input type="text" name="vin" value="<?= $data->features?>"><br>
         <div class="radio">
             <label>New:</label>
             <label>Used:</label><br>

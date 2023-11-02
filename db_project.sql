@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2023 at 09:16 PM
+-- Generation Time: Nov 02, 2023 at 06:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,92 +24,192 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cars`
+-- Table structure for table `admin`
 --
 
-CREATE TABLE `cars` (
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `fname` varchar(50) NOT NULL,
+  `lname` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `password`, `fname`, `lname`) VALUES
+(1, 'AdminCaptain', '27b4c55047c7e1450a5dd83ccf4a6ca0', 'YassVladPeter', 'TripleThreatUser');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `car`
+--
+
+CREATE TABLE `car` (
   `id` int(11) NOT NULL,
   `seller_id` int(11) NOT NULL,
-  `make` varchar(15) NOT NULL,
-  `model` varchar(15) NOT NULL,
-  `ext_color` varchar(15) NOT NULL,
-  `int_color` varchar(15) NOT NULL,
+  `make` varchar(30) NOT NULL,
+  `model` varchar(30) NOT NULL,
   `year` int(4) NOT NULL,
-  `price` int(9) NOT NULL,
-  `dist_traveled` int(7) DEFAULT 0,
-  `VIN` varchar(17) NOT NULL,
-  `status` varchar(4) NOT NULL DEFAULT 'Used',
-  `picture` varchar(50) DEFAULT 'NoImage'
+  `price` int(11) NOT NULL,
+  `ext_col` varchar(20) NOT NULL,
+  `int_col` varchar(20) NOT NULL,
+  `distance` int(7) NOT NULL,
+  `status` varchar(4) NOT NULL,
+  `features` varchar(500) NOT NULL,
+  `picture` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cars`
+-- Dumping data for table `car`
 --
 
-INSERT INTO `cars` (`id`, `seller_id`, `make`, `model`, `ext_color`, `int_color`, `year`, `price`, `dist_traveled`, `VIN`, `status`, `picture`) VALUES
-(1, 15, 'Honda', 'CR-V', 'Red', 'White', 2007, 2300, 145000, '4CD4903LQW00WER', 'Used', 'HondaCR-V2007Red.png'),
-(2, 2, 'Toyota', 'RAV4', 'white', 'black', 2015, 12000, 100000, '5Y1SL65848Z411439', 'Used', 'WhiteToyotaRAV42015.png'),
-(3, 2, 'Honda', 'Civic', 'black', 'grey', 2008, 6000, 203569, '5Y1SL33248B411439', 'Used', 'blackHondaCivic2008.png'),
-(4, 4, 'Nissan', 'Rogue', 'Brown', 'Grey', 2023, 38000, 100000, '9DF2345YJS89WFG00', 'Used', 'BrownNissanRogue2023.png'),
-(5, 5, 'Hyundai', 'Accent', 'Blue', 'Black', 2023, 38000, 0, '9DF2345YJS89WFG00', 'New', 'HyundaiAccent2023Blue.png'),
-(6, 6, 'Toyota', 'Supra', 'White', 'Black', 2003, 23000, 154000, '9DF2345YJS89WFG00', 'Used', 'WhiteToyotaSupra2003.png');
+INSERT INTO `car` (`id`, `seller_id`, `make`, `model`, `year`, `price`, `ext_col`, `int_col`, `distance`, `status`, `features`, `picture`) VALUES
+(1, 1, 'Honda', 'CR-V', 2007, 2300, 'Red', 'Grey', 155000, 'Used', 'Heated seats', 'HondaCR-V2007Red.png'),
+(2, 1, 'Toyota', 'Matrix', 2003, 3000, 'Grey', 'Grey', 140000, 'Used', 'Sunroof', 'ToyotaMatrix2003White.png');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `list`
+-- Table structure for table `comment`
 --
 
-CREATE TABLE `list` (
-  `id` int(8) NOT NULL,
-  `name` varchar(128) NOT NULL,
-  `description` varchar(128) NOT NULL,
-  `status` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `list`
---
-
-INSERT INTO `list` (`id`, `name`, `description`, `status`) VALUES
-(123456, 'Vlad Dumitrescu', 'Purolator', 'Delivered'),
-(587945, 'Ronald Raphael', 'Bike', 'Pending');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
+CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `comment` varchar(500) NOT NULL,
+  `date` date NOT NULL,
+  `seller_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `car_id` int(11) NOT NULL,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `address` varchar(80) NOT NULL,
+  `card_num` bigint(16) NOT NULL,
+  `CVV` int(6) NOT NULL,
+  `pay_date` varchar(20) NOT NULL,
+  `expire_date` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seller`
+--
+
+CREATE TABLE `seller` (
+  `seller_id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `fname` varchar(30) NOT NULL,
+  `lname` varchar(30) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `password` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `seller`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
-(1, 'Yassine', 'Y@ss@gmail.com', '$2y$10$Hp0i2JZ.IZ0TBjGcknxsmO4rBPIJSo5Oz9mb81u2csnTWpDt7sE5W'),
-(2, 'CristianoRonaldo', 'CR7@gmail.com', '$2y$10$AprSPGhmSJmiluEDinFv2ubo5AMBfmtKTrFtMvnIaIklthn0o.rnC');
+INSERT INTO `seller` (`seller_id`, `username`, `fname`, `lname`, `email`, `phone`, `password`) VALUES
+(1, 'Haha', 'Scammer', 'Monkey', 'scammermonkey@gmail.com', '(438)-999-6700', '$2y$10$InK5nB5Xdl5jgFfpGFvXTeI0N6yhQJC68EmIb35lSlY1vI9pei81i');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `fname` varchar(30) NOT NULL,
+  `lname` varchar(30) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `fname`, `lname`, `password`, `email`, `phone`) VALUES
+(1, 'yass', 'Yassine', 'El Yamani', '$2y$10$8b6YwRZUrTmI9x4r0F.clOlMMjKR/pddREiGLCCd7bLgDRbM0svq.', 'yasselyamani@gmail.com', '(514)-900-4578');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `cars`
+-- Indexes for table `admin`
 --
-ALTER TABLE `cars`
+ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indexes for table `car`
 --
-ALTER TABLE `users`
+ALTER TABLE `car`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `seller_id_FK` (`seller_id`);
+
+--
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `CS_FK` (`seller_id`),
+  ADD KEY `CU_FK` (`user_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `OU_FK` (`user_id`),
+  ADD KEY `OC_FK` (`car_id`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `PO_FK` (`order_id`);
+
+--
+-- Indexes for table `seller`
+--
+ALTER TABLE `seller`
+  ADD PRIMARY KEY (`seller_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -117,16 +217,76 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `cars`
+-- AUTO_INCREMENT for table `admin`
 --
-ALTER TABLE `cars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for table `car`
 --
-ALTER TABLE `users`
+ALTER TABLE `car`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `seller`
+--
+ALTER TABLE `seller`
+  MODIFY `seller_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `car`
+--
+ALTER TABLE `car`
+  ADD CONSTRAINT `seller_id_FK` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`seller_id`);
+
+--
+-- Constraints for table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `CS_FK` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`seller_id`),
+  ADD CONSTRAINT `CU_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `OC_FK` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`),
+  ADD CONSTRAINT `OU_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `PO_FK` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

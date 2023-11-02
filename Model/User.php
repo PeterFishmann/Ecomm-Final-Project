@@ -4,9 +4,12 @@ class User extends Model{
     var $username;
     var $email;
     var $password;
+    var $lname;
+    var $fname;
+    var $phone;
 
     public function get(){
-        $SQL = "SELECT * FROM users";
+        $SQL = "SELECT * FROM user";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
@@ -14,7 +17,7 @@ class User extends Model{
     }
 
     public function edit(){
-        $SQL = "UPDATE users SET username=:username, email=:email WHERE id=:id";
+        $SQL = "UPDATE user SET username=:username, email=:email WHERE id=:id";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['id'=>$this->id,
                         'username'=>$this->username,
@@ -23,7 +26,7 @@ class User extends Model{
     }
 
     public function find($id){
-        $SQL = "SELECT * FROM users WHERE id=:id";
+        $SQL = "SELECT * FROM user WHERE id=:id";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['id'=>$id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
@@ -31,7 +34,7 @@ class User extends Model{
     }
 
     public function findUsername($username){
-        $SQL = "SELECT * FROM users WHERE username=:username";
+        $SQL = "SELECT * FROM user WHERE username=:username";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['username'=>$username]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
@@ -39,7 +42,7 @@ class User extends Model{
     }
 
     public function findEmail($email){
-        $SQL = "SELECT * FROM users WHERE email=:email";
+        $SQL = "SELECT * FROM user WHERE email=:email";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['email'=>$email]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
@@ -48,12 +51,15 @@ class User extends Model{
 
 
     public function create(){
-        $sql = "INSERT INTO users (id, username, email, password) VALUES (:id, :username, :email, :password)";
+        $sql = "INSERT INTO user (id, username,fname, lname, email, password,phone) VALUES (:id, :username, :fname, :lname, :email, :password, :phone)";
         $stmt = self::$_conn->prepare($sql);
         $stmt->execute(['id'=>$this->id,
                         'username'=>$this->username,
+                        'fname'=>$this->fname,
+                        'lname'=>$this->lname,
                         'email'=>$this->email,
-                        'password'=>$this->password]);
+                        'password'=>$this->password,
+                        'phone'=>$this->phone]);
         return $stmt;
     }
 }

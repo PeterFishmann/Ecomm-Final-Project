@@ -6,7 +6,7 @@ class Order extends Model{
     var $status;
 
     public function get(){
-        $SQL = "SELECT * FROM list";
+        $SQL = "SELECT * FROM orders";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS,'Order');
@@ -14,7 +14,7 @@ class Order extends Model{
     }
 
     public function edit(){
-        $SQL = "UPDATE list SET name=:name, description=:description, status=:status WHERE id=:id";
+        $SQL = "UPDATE orders SET name=:name, description=:description, status=:status WHERE id=:id";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['id'=>$this->id,
                         'name'=>$this->name,
@@ -24,7 +24,7 @@ class Order extends Model{
     }
 
     public function find($id){
-        $SQL = "SELECT * FROM list WHERE id=:id";
+        $SQL = "SELECT * FROM orders WHERE id=:id";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['id'=>$id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'Order');

@@ -4,16 +4,16 @@ class Car extends Model{
     var $make;
     var $model;
     var $year;
-    var $ext_color;
-    var $int_color;
+    var $ext_col;
+    var $int_col;
     var $price;
     var $distance;
-    var $VIN;
+    var $features;
     var $status;
     var $picture;
 
     public function get(){
-        $SQL = "SELECT * FROM cars";
+        $SQL = "SELECT * FROM car";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
@@ -21,31 +21,47 @@ class Car extends Model{
     }
 
     public function update(){
-        $SQL = "UPDATE cars SET seller_id=:seller_id, make=:make, model=:model, year=:year, ext_color=:ext_color, int_color=:int_color, price=:price, dist_traveled=:dist_traveled, VIN=:VIN,status=:status, picture=:picture WHERE id=:id";
+        $SQL = "UPDATE car SET seller_id=:seller_id, make=:make, model=:model, year=:year, ext_col=:ext_col, int_col=:int_col, price=:price, distance=:distance, features=:features,status=:status, picture=:picture WHERE id=:id";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['id'=>$this->id,
                         'seller_id'=>$this->seller_id,
                         'make'=>$this->make,
                         'model'=>$this->model,
                         'year'=>$this->year,
-                        'ext_color'=>$this->ext_color,
-                        'int_color'=>$this->int_color,
+                        'ext_col'=>$this->ext_col,
+                        'int_col'=>$this->int_col,
                         'price'=>$this->price,
-                        'dist_traveled'=>$this->distance,
-                        'VIN'=>$this->VIN,
+                        'distance'=>$this->distance,
+                        'features'=>$this->features,
                         'status'=>$this->status,
                         'picture'=>$this->picture]);
         return $stmt->rowCount();
     }
 
     public function find($id){
-        $SQL = "SELECT * FROM cars WHERE id=:id";
+        $SQL = "SELECT * FROM car WHERE id=:id";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['id'=>$id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
         return $stmt->fetch();
     }
 
+    public function findCar($make){
+        $SQL = "SELECT * FROM car WHERE make like :make OR model like :make";
+        $stmt = self::$_conn->prepare($SQL);
+        $stmt->execute(['make'=>'%'.$make.'%']);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
+        return $stmt->fetchAll();
+    }
+
+    public function findModel($make, $model){
+        $SQL = "SELECT * FROM car WHERE make like :make AND model like :model";
+        $stmt = self::$_conn->prepare($SQL);
+        $stmt->execute(['make'=>'%'.$make.'%',
+                        'model'=>'%'.$model.'%']);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
+        return $stmt->fetchAll();
+    }
 }
 
 

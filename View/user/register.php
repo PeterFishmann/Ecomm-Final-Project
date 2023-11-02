@@ -37,6 +37,21 @@
               </div>
 
               <div class="form-outline form-white mb-4">
+                <input type="text" id="typeEmailX" class="form-control form-control-lg" name="phone"/>
+                <label class="form-label" for="typeEmailX">phone</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <input type="text" id="typeEmailX" class="form-control form-control-lg" name="fname"/>
+                <label class="form-label" for="typeEmailX">fname</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
+                <input type="text" id="typeEmailX" class="form-control form-control-lg" name="lname"/>
+                <label class="form-label" for="typeEmailX">lname</label>
+              </div>
+
+              <div class="form-outline form-white mb-4">
                 <input type="password" id="typePasswordX" class="form-control form-control-lg" name="password"/>
                 <label class="form-label" for="typePasswordX">Password</label>
               </div>
