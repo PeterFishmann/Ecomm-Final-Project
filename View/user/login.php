@@ -6,16 +6,17 @@
   <title>Login with username</title>
     <?php 
     include 'View/includes/style.php';
+    include 'View/includes/navbar.php';
     ?>
 </head>
 <body>
+<section class="vh-100" style="background-color: lightgrey;">
 <?php
     if(!is_array($data)){
         echo "<div class='alert alert-danger' role='alert'>$data</div>";
     }
     ?>
-<section class="vh-100" style="background-color: #508bfc;">
-  <div class="container py-5 h-100">
+    <div class="container" style="padding-top: 10px;">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card shadow-2-strong" style="border-radius: 1rem;">

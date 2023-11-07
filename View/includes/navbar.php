@@ -1,13 +1,5 @@
 <nav class="navbar navbar-dark bg-primary">
 <a class="navbar-brand" href="/home/index">EzCarBuyer</a>
-
-
-  <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    !-->
         <a class="nav-link" href="/home/index" style='color:white; text-decoration:none'>Home <span class="sr-only">(current)</span></a>
         <a class="nav-link" href="/car/index" style='color:white; text-decoration:none'>Cars</a>
         <?php
@@ -35,11 +27,18 @@
           <?php
         }
         ?>
-        <a class="nav-link" href="/order/index" style='color:white; text-decoration:none'>Orders</a>
         <?php
         if(isset($_SESSION['username'])){
+          echo '<a class="nav-link" href="/order/index" style="color:white; text-decoration:none">My orders</a>';
           echo "<button class='btn btn-danger'><a href='/User/logout' style='color:white; text-decoration:none'>Logout</a></button>";
+          echo "<img src='../../Images/users/".$_SESSION['picture']."' width='50' height='50' class='rounded-circle'>";
         }
         ?>
   </div>
 </nav>
+<style>
+  .dropdown-menu{
+    text-align:center;
+    left:-60%;
+  }
+</style>

@@ -16,6 +16,7 @@
     <th>Description</th>
     <th>status</th>
 <?php
+echo "Nothing to show you here yet";
             foreach($data['order'] as $order){
                 echo "<tr><td>$order->name</td><td>$order->description</td><td>$order->status</td><td><a href='/order/update/$order->id'>Edit</a></td></tr>";
             }

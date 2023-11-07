@@ -51,7 +51,7 @@ class User extends Model{
 
 
     public function create(){
-        $sql = "INSERT INTO user (id, username,fname, lname, email, password,phone) VALUES (:id, :username, :fname, :lname, :email, :password, :phone)";
+        $sql = "INSERT INTO user (id, username,fname, lname, email, password,phone, picture) VALUES (:id, :username, :fname, :lname, :email, :password, :phone, :picture)";
         $stmt = self::$_conn->prepare($sql);
         $stmt->execute(['id'=>$this->id,
                         'username'=>$this->username,
@@ -59,8 +59,16 @@ class User extends Model{
                         'lname'=>$this->lname,
                         'email'=>$this->email,
                         'password'=>$this->password,
-                        'phone'=>$this->phone]);
+                        'phone'=>$this->phone,
+                        'picture'=>$this->picture]);
         return $stmt;
+    }
+    public function findRight($id){
+        $sql = "SELECT rights FROM user JOIN user_rights ON user.id = user_rights.user_id JOIN rights ON user_rights.rights_id = rights.id WHERE user.id = :id";
+        $stmt = self::$_conn->prepare($sql);
+        $stmt->execute(['id'=>$id]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
+        return $stmt->fetch();
     }
 }
 

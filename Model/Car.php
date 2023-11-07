@@ -21,10 +21,9 @@ class Car extends Model{
     }
 
     public function update(){
-        $SQL = "UPDATE car SET seller_id=:seller_id, make=:make, model=:model, year=:year, ext_col=:ext_col, int_col=:int_col, price=:price, distance=:distance, features=:features,status=:status, picture=:picture WHERE id=:id";
+        $SQL = "UPDATE car SET make=:make, model=:model, year=:year, ext_col=:ext_col, int_col=:int_col, price=:price, distance=:distance, features=:features,status=:status, picture=:picture WHERE id=:id";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['id'=>$this->id,
-                        'seller_id'=>$this->seller_id,
                         'make'=>$this->make,
                         'model'=>$this->model,
                         'year'=>$this->year,
@@ -46,22 +45,41 @@ class Car extends Model{
         return $stmt->fetch();
     }
 
-    public function findCar($make){
-        $SQL = "SELECT * FROM car WHERE make like :make OR model like :make";
+    public function findCar($make,$minYear,$maxYear,$minDistance, $maxDistance, $int, $ext, $stat){
+        $SQL = "SELECT * FROM car WHERE (make like :make OR model like :make) AND (year >= :year AND year <= :Year) AND (distance >= :distance AND distance <= :Distance) AND (int_col like :color OR ext_col like :Color) AND (status like :status)";
         $stmt = self::$_conn->prepare($SQL);
-        $stmt->execute(['make'=>'%'.$make.'%']);
+        $stmt->execute(['make'=>'%'.$make.'%',
+                        'year'=>$minYear,
+                        'Year'=>$maxYear,
+                        'distance'=>$minDistance,
+                        'Distance'=>$maxDistance,
+                        'color'=>'%'.$int.'%',
+                        'Color'=>'%'.$ext.'%',
+                        'status'=>'%'.$stat.'%']);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
         return $stmt->fetchAll();
     }
 
-    public function findModel($make, $model){
-        $SQL = "SELECT * FROM car WHERE make like :make AND model like :model";
+    public function findModel($make, $model,$minYear,$maxYear,$minDistance, $maxDistance, $int,$ext, $stat){
+        $SQL = "SELECT * FROM car WHERE (make like :make AND model like :model) AND (year >= :year AND year <= :Year) AND (distance >= :distance AND distance <= :Distance) AND (int_col like :color OR ext_col like :Color) AND (status like :status)";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['make'=>'%'.$make.'%',
-                        'model'=>'%'.$model.'%']);
+                        'model'=>'%'.$model.'%',
+                        'year'=>$minYear,
+                        'Year'=>$maxYear,
+                        'distance'=>$minDistance,
+                        'Distance'=>$maxDistance,
+                        'color'=>'%'.$int.'%',
+                        'Color'=>'%'.$ext.'%',
+                        'status'=>'%'.$stat.'%']);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
         return $stmt->fetchAll();
     }
+
+    public function create(){
+        $sql = "";
+    }
+
 }
 
 
