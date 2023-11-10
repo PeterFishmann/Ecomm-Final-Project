@@ -47,10 +47,6 @@
                     <input type="text" name="int" value="<?= $data->int_col?>">
                 </div>
                 <div class="col-md-4">
-                    <label>Features:</label>
-                    <input type="text" name="vin" value="<?= $data->features?>">
-                </div>
-                <div class="col-md-4">
                     <label>Condition:</label>
                     <div class="radio">
                         <label for="new">New</label>

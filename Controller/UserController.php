@@ -16,8 +16,8 @@ class UserController extends Controller{
         }else{
         if(isset($_POST['login'])){
             $newUser = $this->model('User')->findUsername($_POST['username']);
-            $right = $this->model('User')->findRight($newUser->id);
             if($newUser!=null && password_verify($_POST['password'],$newUser->password)){
+                $right = $this->model('User')->findRight($newUser->id);
                 $_SESSION['id'] = $newUser->id;
                 $_SESSION['username'] = $newUser->username;
                 $_SESSION['email'] = $newUser->email;
@@ -95,9 +95,8 @@ class UserController extends Controller{
                     $newUser->fname = $_POST['fname'];
                     $newUser->lname = $_POST['lname'];
                     $newRight->rights_id = $_POST['right'];
-                    $newUser->picture = $_FILES['profPic']['name']; 
+                    $newUser->picture = !empty($_FILES['profPic']['name']) ? $_FILES['profPic']['name'] : "Avatar.png"; 
                     $newUser->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                    var_dump($newUser);
                     $newUser->create();
                     $id = $newUser->findUsername($_POST['username']);
                     $newRight->user_id = $id->id;
@@ -110,9 +109,51 @@ class UserController extends Controller{
             }
         }
     }
+
+    public function listing(){
+        $this->view("user/listing");
+    }
     
     public function logout(){
         session_destroy();
         header("location: /user/login");
+    }
+
+    public function buyers(){
+        if(isset($_SESSION['username'])){
+            if($_SESSION['right'] == "Admin"){
+                $user = $this->model('user')->findBuyer();
+                $this->view("user/buyers",$user);
+            }else{
+                header('location: /car/index');
+            }
+        }else{
+                header('location: /user/login');
+            }
+        }
+
+    public function sellers(){
+            if(isset($_SESSION['username'])){
+                if($_SESSION['right'] == "Admin"){
+                    $user = $this->model('user')->findSeller();
+                    $this->view("user/sellers",$user);
+                }else{
+                    header('location: /car/index');
+                }
+            }else{
+                header('location: /user/login');
+            }
+    }
+    public function AllUsers($id = 0){
+        if(isset($_SESSION['username'])){
+            if($_SESSION['right'] == "Admin"){
+                $user = $this->model('user')->All($id);
+                $this->view("user/AllUsers",$user);
+            }else{
+                header('location: /car/index');
+            }
+        }else{
+            header('location: /user/login');
+        }
     }
 }

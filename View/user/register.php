@@ -6,7 +6,7 @@
     <title>Register page</title>
     <?php 
     include 'View/includes/style.php';
-    include 'View/includes/navbar.php';
+    include 'View/includes/header.php';
     ?>
 </head>
 <body>
@@ -27,24 +27,6 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline form-white">
-                                            <input type="text" id="username" class="form-control" name="username" required>
-                                            <label class="form-label" for="username">Username</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-4">
-                                        <div class="form-outline form-white">
-                                            <input type="email" id="email" class="form-control" name="email" required>
-                                            <label class="form-label" for="email">Email</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-4">
-                                        <div class="form-outline form-white">
-                                            <input type="text" id="phone" class="form-control" name="phone" required>
-                                            <label class="form-label" for="phone">Phone</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-4">
-                                        <div class="form-outline form-white">
                                             <input type="text" id="fname" class="form-control" name="fname" required>
                                             <label class="form-label" for="fname">First Name</label>
                                         </div>
@@ -57,6 +39,18 @@
                                     </div>
                                     <div class="col-md-6 mb-4">
                                         <div class="form-outline form-white">
+                                            <input type="text" id="username" class="form-control" name="username" required>
+                                            <label class="form-label" for="username">Username</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline form-white">
+                                            <input type="email" id="email" class="form-control" name="email" required>
+                                            <label class="form-label" for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline form-white">
                                             <input type="password" id="password" class="form-control" name="password" required>
                                             <label class="form-label" for="password">Password</label>
                                         </div>
@@ -65,6 +59,12 @@
                                         <div class="form-outline form-white">
                                             <input type="password" id="Confpassword" class="form-control" name="Confpassword" required>
                                             <label class="form-label" for="Confpassword">Confirm Password</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline form-white">
+                                            <input type="text" id="phone" class="form-control" name="phone" required>
+                                            <label class="form-label" for="phone">Phone</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">

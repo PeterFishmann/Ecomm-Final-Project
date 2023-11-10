@@ -13,7 +13,12 @@ class User_Rights extends Model{
         return $stmt;
     }
 
-
+    public function remove($user){
+        $sql = "DELETE FROM user_rights WHERE user_id = :id";
+        $stmt = self::$_conn->prepare($sql);
+        $stmt->execute(['id'=>$user]);
+        return $stmt;
+    }
 
 
 }

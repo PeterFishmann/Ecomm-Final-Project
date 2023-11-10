@@ -7,6 +7,7 @@ class User extends Model{
     var $lname;
     var $fname;
     var $phone;
+    var $picture;
 
     public function get(){
         $SQL = "SELECT * FROM user";
@@ -70,9 +71,28 @@ class User extends Model{
         $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
         return $stmt->fetch();
     }
+
+    public function findBuyer(){
+        $sql = "SELECT user.id, username, email, phone, fname, lname, picture FROM user JOIN user_rights ON user.id = user_rights.user_id JOIN rights ON user_rights.rights_id = rights.id WHERE rights.rights = 'Buyer'";
+        $stmt = self::$_conn->prepare($sql);
+        $stmt->execute([]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
+        return $stmt->fetchAll();
+    }
+
+    public function findSeller(){
+        $sql = "SELECT user.id, username, email, phone, fname, lname, picture FROM user JOIN user_rights ON user.id = user_rights.user_id JOIN rights ON user_rights.rights_id = rights.id WHERE rights.rights = 'Seller'";
+        $stmt = self::$_conn->prepare($sql);
+        $stmt->execute([]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
+        return $stmt->fetchAll();
+    }
+    public function All($id){
+        $sql = "SELECT * FROM user WHERE id != :id";
+        $stmt = self::$_conn->prepare($sql);
+        $stmt->execute(['id'=>$id]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
+        return $stmt->fetchAll();
+    }
 }
-
-
-
-
 ?>

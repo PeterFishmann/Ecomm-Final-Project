@@ -7,7 +7,7 @@
     </head>
     <?php
     include 'View/includes/style.php';
-    include 'View/includes/navbar.php';
+    include 'View/includes/header.php';
     ?>
 <body>
    <h1><center>Order List</center></h1>
@@ -16,7 +16,6 @@
     <th>Description</th>
     <th>status</th>
 <?php
-echo "Nothing to show you here yet";
             foreach($data['order'] as $order){
                 echo "<tr><td>$order->name</td><td>$order->description</td><td>$order->status</td><td><a href='/order/update/$order->id'>Edit</a></td></tr>";
             }

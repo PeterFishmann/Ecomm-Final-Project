@@ -1,6 +1,7 @@
 <?php
 class Car extends Model{
-    var $seller_id;
+    var $id;
+    var $user_id;
     var $make;
     var $model;
     var $year;
@@ -8,7 +9,6 @@ class Car extends Model{
     var $int_col;
     var $price;
     var $distance;
-    var $features;
     var $status;
     var $picture;
 
@@ -21,9 +21,10 @@ class Car extends Model{
     }
 
     public function update(){
-        $SQL = "UPDATE car SET make=:make, model=:model, year=:year, ext_col=:ext_col, int_col=:int_col, price=:price, distance=:distance, features=:features,status=:status, picture=:picture WHERE id=:id";
+        $SQL = "UPDATE car SET user_id = :user_id, make=:make, model=:model, year=:year, ext_col=:ext_col, int_col=:int_col, price=:price, distance=:distance,status=:status, picture=:picture WHERE id=:id";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['id'=>$this->id,
+                        'user_id'=>$this->user_id,
                         'make'=>$this->make,
                         'model'=>$this->model,
                         'year'=>$this->year,
@@ -31,7 +32,6 @@ class Car extends Model{
                         'int_col'=>$this->int_col,
                         'price'=>$this->price,
                         'distance'=>$this->distance,
-                        'features'=>$this->features,
                         'status'=>$this->status,
                         'picture'=>$this->picture]);
         return $stmt->rowCount();
@@ -76,8 +76,36 @@ class Car extends Model{
         return $stmt->fetchAll();
     }
 
+    public function findDesc(){
+        $sql = "SELECT * FROM car ORDER BY id DESC";
+        $stmt = self::$_conn->prepare($sql);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
+        return $stmt->fetchAll();
+    }
+
     public function create(){
-        $sql = "";
+        $sql = "INSERT INTO car (id, user_id, make, model, year, distance, ext_col, int_col, status, price, picture) VALUES (:id, :user_id, :make, :model, :year, :distance, :ext_col, :int_col, :status, :price, :picture)";
+        $stmt = self::$_conn->prepare($sql);
+        $stmt->execute(['id'=>$this->id,
+                        'user_id'=>$this->user_id,
+                        'make'=>$this->make,
+                        'model'=>$this->model,
+                        'year'=>$this->year,
+                        'ext_col'=>$this->ext_col,
+                        'int_col'=>$this->int_col,
+                        'price'=>$this->price,
+                        'distance'=>$this->distance,
+                        'status'=>$this->status,
+                        'picture'=>$this->picture]);
+        return $stmt;
+    }
+
+    public function delete($id){
+        $sql = "DELETE FROM car WHERE id = :id";
+        $stmt = self::$_conn->prepare($sql);
+        $stmt->execute(['id'=>$id]);
+        return $stmt;
     }
 
 }

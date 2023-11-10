@@ -6,7 +6,7 @@
   <title>Login with username</title>
     <?php 
     include 'View/includes/style.php';
-    include 'View/includes/navbar.php';
+    include 'View/includes/header.php';
     ?>
 </head>
 <body>

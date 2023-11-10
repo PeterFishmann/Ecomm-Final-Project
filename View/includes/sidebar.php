@@ -12,7 +12,7 @@
                         </li>
                         <li class="nav-item">
                         <label><b>Make/Model</b></label>
-                        <input class="form-control" type="text" name="search" placeholder="Enter make/model" value="<?php if(isset($_POST['filter'])){echo $_POST['search'];}else{echo "";}?>">
+                        <input class="form-control" type="search" name="search" placeholder="Enter make/model" value="<?php if(isset($_POST['filter'])){echo $_POST['search'];}else{echo "";}?>">
                         </li>
                         <li class="nav-item">
                             <label><b>Distance (KM)</b></label><br>
@@ -40,7 +40,6 @@
                         </li><br>
                         <li class="nav-item">
                             <input id="apply-filter" type="submit" class="btn btn-primary" name="filter" value="Apply Filter">
-                            <input type="reset" class="btn btn-danger" name="reset" value="Clear">
                         </li>
                         </form>
                     </ul>
