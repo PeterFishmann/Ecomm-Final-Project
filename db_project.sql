@@ -153,7 +153,7 @@ INSERT INTO `features` (`id`, `features`, `description`) VALUES
 (8, 'Keyless Entry', 'Convenient access to the car without using a key.'),
 (9, 'Cruise Control', 'Maintains a constant speed on the highway.'),
 (10, 'Heated Seats', 'Keeps you warm during cold weather.'),
-(11, 'Alloy Wheels', 'Enhance the car\'s appearance and performance.'),
+(11, 'Alloy Wheels', "Enhance the car's appearance and performance."),
 (12, 'Fog Lights', 'Improve visibility in foggy conditions.'),
 (13, 'Remote Start', 'Start the car remotely for convenience.'),
 (14, 'Parking Sensors', 'Alerts you to obstacles when parking.'),
