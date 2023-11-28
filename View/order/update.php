@@ -12,8 +12,8 @@
 <body>
     <h1>Update order</h1>
     <form method='post'>
-    Customer Name: <input type='text' name='name' value="<?= $data->name?>"><br>
-    Description: <input type='text' name='description' value="<?= $data->description?>"><br>
+    Customer Name: <input type='text' name='name' value="<?= $data->car_id?>"><br>
+    Description: <input type='text' name='description' value="<?= $data->price?>"><br>
     Status: <input type='text' name='status' value="<?= $data->status?>"><br>
     <input type='submit' name="edit" value='Update Order'>
     </form>  

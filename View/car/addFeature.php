@@ -11,7 +11,12 @@
     include 'View/includes/header.php';
     ?>
     <h1>It's time to add some features to your car</h1>
-    <table class="table">
+    <?php
+    if(!is_array($data)){
+            echo "<div class='alert alert-warning' role='alert'>$data</div>";
+    }
+    ?>
+        <table class="table">
         <th>Feature</th>
         <th>Description</th>
         <th>Yes/No</th>
@@ -29,8 +34,5 @@
         <input type="submit" name="confirm">
         </form>
     </table>
-    <?php
-    var_dump($_POST);
-    ?>
 </body>
 </html>

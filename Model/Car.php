@@ -45,6 +45,23 @@ class Car extends Model{
         return $stmt->fetch();
     }
 
+    public function findByUser($id){
+        $SQL = "SELECT * FROM car WHERE user_id=:id";
+        $stmt = self::$_conn->prepare($SQL);
+        $stmt->execute(['id'=>$id]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
+        return $stmt->fetchAll();
+    }
+
+    public function findIdUser($id, $uID){
+        $SQL = "SELECT * FROM car WHERE user_id=:user_id AND id=:id";
+        $stmt = self::$_conn->prepare($SQL);
+        $stmt->execute(['id'=>$id,
+                        'user_id'=>$uID]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
+        return $stmt->fetch();
+    }
+
     public function findCar($make,$minYear,$maxYear,$minDistance, $maxDistance, $int, $ext, $stat){
         $SQL = "SELECT * FROM car WHERE (make like :make OR model like :make) AND (year >= :year AND year <= :Year) AND (distance >= :distance AND distance <= :Distance) AND (int_col like :color OR ext_col like :Color) AND (status like :status)";
         $stmt = self::$_conn->prepare($SQL);
@@ -76,10 +93,10 @@ class Car extends Model{
         return $stmt->fetchAll();
     }
 
-    public function findDesc(){
-        $sql = "SELECT * FROM car ORDER BY id DESC";
+    public function findDesc($id){
+        $sql = "SELECT * FROM car WHERE user_id = :id ORDER BY id DESC";
         $stmt = self::$_conn->prepare($sql);
-        $stmt->execute();
+        $stmt->execute(['id'=>$id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
         return $stmt->fetchAll();
     }
@@ -106,6 +123,14 @@ class Car extends Model{
         $stmt = self::$_conn->prepare($sql);
         $stmt->execute(['id'=>$id]);
         return $stmt;
+    }
+
+    public function findEverything($id){
+        $SQL = "SELECT * FROM car JOIN car_features ON car.id = car_features.car_id JOIN features ON car_features.feature_id = features.id WHERE car.id=:id";
+        $stmt = self::$_conn->prepare($SQL);
+        $stmt->execute(['id'=>$id]);
+        $stmt->setFetchMode(PDO::FETCH_CLASS,'Car');
+        return $stmt->fetchAll();
     }
 
 }

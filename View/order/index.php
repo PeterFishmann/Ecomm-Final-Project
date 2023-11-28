@@ -12,12 +12,14 @@
 <body>
    <h1><center>Order List</center></h1>
    <table>
-    <th>name</th>
-    <th>Description</th>
+    <th>User</th>
+    <th>Car</th>
     <th>status</th>
-<?php
+    <th>Price</th>
+
+        <?php
             foreach($data['order'] as $order){
-                echo "<tr><td>$order->name</td><td>$order->description</td><td>$order->status</td><td><a href='/order/update/$order->id'>Edit</a></td></tr>";
+                echo "<tr><td>$order->user_id</td><td>$order->car_id</td><td>$order->status</td><td>$order->price</td><td><a href='/order/update/$order->id'>Edit</a></td></tr>";
             }
         ?>
         </table>

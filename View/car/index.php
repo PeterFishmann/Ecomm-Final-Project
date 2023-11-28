@@ -64,16 +64,14 @@
                     <div class="col-md-3">
                         <div class="card-body text-center">
                             <h4 class="card-title"><?= $item->price ?>$</h4>
-                            <h6 class="text-success"><?= ($item->price <= 10000) ? 'Great deal' : 'Could negotiate with you' ?></h6>
                             <?php
-                            if(isset($_SESSION['username']) && $_SESSION['right'] != "Seller"){
+                            if(isset($_SESSION['username']) && $_SESSION['right'] != "Seller" && $_SESSION['id'] != $item->user_id){
                             ?>
-                            <a href="/car/buy/<?= $item->id ?>" class="btn btn-primary btn-sm">Buy</a>
+                            <a href="/order/insert/<?=$item->id?>" class="btn btn-primary btn-sm">Buy</a>
                             <?php
                             }else if(!isset($_SESSION['username'])){
                                 ?>
                                 <a href="/user/login" class="btn btn-primary btn-sm">Buy</a>
-                                
                                 <?php
                             }?>
                             <a href="/car/detail/<?= $item->id ?>" class="btn btn-primary btn-sm">Detail</a>

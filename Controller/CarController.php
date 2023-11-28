@@ -61,10 +61,6 @@ class CarController extends Controller {
     }
 }
 
-    public function buy($id) {
-        $theNewCar = $this->model('Car')->find($id);
-        $this->view("car/buy", $theNewCar);
-    }
 
     public function create(){
         if(isset($_SESSION['username']) && $_SESSION['right'] != "Buyer"){
@@ -94,18 +90,19 @@ class CarController extends Controller {
         }
     }
 
-    /*public function addFeature(){
+    public function addFeature(){
         if(isset($_SESSION['username']) && $_SESSION['right'] != "Buyer"){
             if(isset($_POST['confirm'])){
                 $i = 1;
                 while($i<=20){
                     if(isset($_POST["$i"])){
-                        $car_id = $this->model('Car')->findDesc();
+                        $car = $this->model('Car')->findDesc($_SESSION['id']);
                         $id = $this->model('features')->findByFt($_POST["$i"]);
-                        //$newFeat = $this->model('car_features');
-                        //$newFeat->car_id = $car_id[0]->id;
-                        //$newFeat->feature_id = $id->id;
-                        //$newFeat->add();
+                        $newFeat = $this->model('car_features');
+                        $newFeat->car_id = $car[0]->id;
+                        $newFeat->feature_id = $id->id;
+                        $newFeat->add();
+                        header('location: /car/index');
                     }
                     $i++;
                 }
@@ -114,12 +111,12 @@ class CarController extends Controller {
                 $this->view("car/addFeature",['features'=>$features]);
             }
         }else{
-            header('location: car/index');
+            header('location: /car/index');
         }
-    }*/
+    }
 
     public function delete($id = 0){
-        if(isset($_SESSION['username']) && $_SESSION['right']=="Admin"){
+        if(isset($_SESSION['username']) && $_SESSION['right'] == "Admin" || ($_SESSION['right'] == "Seller" && $_SESSION['id']==$this->model('car')->findIdUser($id,$_SESSION['id'])->user_id)){
             if($id>0 && $this->model('Car')->find($id)){
                 $car = $this->model('car_features')->remove($id);
                 $car = $this->model('car')->delete($id);
@@ -132,9 +129,15 @@ class CarController extends Controller {
         }
     }
 
-    public function detail($id){
+    public function detail($id = 0){
         $car = $this->model('car')->find($id);
         $this->view("car/detail",$car);
+    }
+
+    public function review($id = 0){
+        $car = $this->model('car')->find($id);
+        var_dump($car);
+        //$this->view('car/review');
     }
 }
 ?>

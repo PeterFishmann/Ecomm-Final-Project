@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2023 at 05:07 AM
+-- Generation Time: Nov 28, 2023 at 05:45 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,11 +46,11 @@ CREATE TABLE `car` (
 --
 
 INSERT INTO `car` (`id`, `user_id`, `make`, `model`, `year`, `price`, `ext_col`, `int_col`, `distance`, `status`, `picture`) VALUES
-(18, 2, 'Mclaren', 'M43', 2023, 10000, 'Black', 'Green', 0, 'New', 'Mclaren.png'),
-(20, 2, 'Hyundai', 'Rav-4', 2012, 3500, 'White', 'Black', 118000, 'Used', 'HyundaiAccent2023Blue.png'),
-(21, 1, 'Hyundai', 'Rav-4', 2008, 10000, 'Dark blue', 'Black', 0, 'New', 'blackHondaCivic2008.png'),
-(22, 1, 'Honda', 'Kango', 2008, 1400, 'White', 'Black', 120000, 'Used', 'blackHondaCivic2008.png'),
-(23, 1, 'Honda', 'Kango', 2008, 1400, 'White', 'Black', 120000, 'Used', 'blackHondaCivic2008.png');
+(27, 1, 'Mclaren', 'M43', 2023, 400000, 'Black', 'Green', 0, 'New', 'Mclaren.png'),
+(28, 1, 'Nissan', 'Rogue', 2023, 38000, 'Orange', 'Black', 0, 'New', 'BrownNissanRogue2023.png'),
+(29, 1, 'Hyundai', 'Accent', 2023, 36000, 'Dark blue', 'Black', 0, 'New', 'HyundaiAccent2023Blue.png'),
+(32, 2, 'Lamborghini', 'Aventador', 2022, 280000, 'Green', 'Black', 500, 'Used', 'WhiteToyotaRAV42015.png'),
+(33, 1, 'Toyota', 'Kango', 2023, 4000, 'Black', 'grey', 0, 'New', 'NoImage.png');
 
 -- --------------------------------------------------------
 
@@ -62,6 +62,54 @@ CREATE TABLE `car_features` (
   `id` int(11) NOT NULL,
   `car_id` int(11) NOT NULL,
   `feature_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `car_features`
+--
+
+INSERT INTO `car_features` (`id`, `car_id`, `feature_id`) VALUES
+(42, 27, 1),
+(43, 27, 3),
+(44, 27, 5),
+(45, 27, 7),
+(46, 27, 9),
+(47, 27, 12),
+(48, 28, 1),
+(49, 28, 2),
+(50, 28, 3),
+(51, 28, 4),
+(52, 28, 5),
+(53, 28, 6),
+(54, 29, 1),
+(55, 29, 2),
+(56, 29, 3),
+(57, 29, 4),
+(58, 29, 5),
+(59, 29, 6),
+(60, 29, 7),
+(62, 32, 1),
+(63, 32, 2),
+(64, 32, 3),
+(65, 32, 4),
+(66, 32, 5),
+(67, 32, 6),
+(68, 33, 1),
+(69, 33, 3),
+(70, 33, 5),
+(71, 33, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `car_review`
+--
+
+CREATE TABLE `car_review` (
+  `id` int(11) NOT NULL,
+  `car_id` int(11) NOT NULL,
+  `review_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -105,7 +153,7 @@ INSERT INTO `features` (`id`, `features`, `description`) VALUES
 (8, 'Keyless Entry', 'Convenient access to the car without using a key.'),
 (9, 'Cruise Control', 'Maintains a constant speed on the highway.'),
 (10, 'Heated Seats', 'Keeps you warm during cold weather.'),
-(11, 'Alloy Wheels', "Enhance the car's appearance and performance."),
+(11, 'Alloy Wheels', 'Enhance the car\'s appearance and performance.'),
 (12, 'Fog Lights', 'Improve visibility in foggy conditions.'),
 (13, 'Remote Start', 'Start the car remotely for convenience.'),
 (14, 'Parking Sensors', 'Alerts you to obstacles when parking.'),
@@ -126,8 +174,20 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `car_id` int(11) NOT NULL,
-  `status` varchar(10) NOT NULL
+  `status` varchar(10) NOT NULL,
+  `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `car_id`, `status`, `price`) VALUES
+(1, 1, 18, 'Not paid', 2300),
+(2, 5, 27, 'Pending', 0),
+(3, 1, 32, 'Pending', 0),
+(4, 12, 28, 'Pending', 38000),
+(5, 5, 33, 'In process', 4000);
 
 -- --------------------------------------------------------
 
@@ -144,6 +204,29 @@ CREATE TABLE `payment` (
   `pay_date` varchar(20) NOT NULL,
   `expire_date` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `review`
+--
+
+CREATE TABLE `review` (
+  `id` int(11) NOT NULL,
+  `stars` int(1) NOT NULL,
+  `term` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`id`, `stars`, `term`) VALUES
+(1, 1, 'Very bad'),
+(2, 2, 'Bad'),
+(3, 3, 'good'),
+(4, 4, 'Very good'),
+(5, 5, 'Excellent');
 
 -- --------------------------------------------------------
 
@@ -179,19 +262,22 @@ CREATE TABLE `user` (
   `password` varchar(256) NOT NULL,
   `email` varbinary(50) NOT NULL,
   `phone` varchar(20) NOT NULL,
-  `picture` varchar(50) NOT NULL
+  `picture` varchar(50) NOT NULL,
+  `access` varchar(3) NOT NULL DEFAULT 'Yes'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `fname`, `lname`, `password`, `email`, `phone`, `picture`) VALUES
-(1, 0x6e696d6179616c65303435, 'Yassine', 'El Yamani', '$2y$10$8b6YwRZUrTmI9x4r0F.clOlMMjKR/pddREiGLCCd7bLgDRbM0svq.', 0x596173734c65424740676d61696c2e636f6d, '(514)-900-4578', 'avatar.png'),
-(2, 0x63726973, 'sdfsdf', 'jsfdjshdbgj', '$2y$10$g6wywWqdBXfnfY9KFTTzt.7EYSeT/ZBSQ8hv8H7LI/HBVkbCFfc.q', 0x63723740676d61696c2e636f6d, '(438)-438-438', 'handsome.png'),
-(5, 0x726f6e, 'Ronald', 'Raphael', '$2y$10$QQlcVtixb2jqvKVfsKZtjOOpxGFi1aLLIe5MoSJtZy8IodtZWR5Jy', 0x726f6e4076616e6965722e6361, '111', 'avatar.png'),
-(9, 0x4247, 'Yassine', 'El Yamani', '$2y$10$PRo8LqsGcThlGLanFdw80eKwrWL3o8E6H7bv198EaHl8/oDmEv9gK', 0x424740676d61696c2e636f6d, '438-566-1284', 'handsome.png'),
-(10, 0x5175697a, 'Q', 'Quest', '$2y$10$KshXVwjIQfG2n.ZvL1ftgekc6ToFyZMmnc0wa9BUOvctmwPrC0zcK', 0x5175697a40676d61696c2e636f6d, '123-456-7890', 'Messi.png');
+INSERT INTO `user` (`id`, `username`, `fname`, `lname`, `password`, `email`, `phone`, `picture`, `access`) VALUES
+(1, 0x6e696d6179616c65303435, 'Yassine', 'El Yamani', '$2y$10$8b6YwRZUrTmI9x4r0F.clOlMMjKR/pddREiGLCCd7bLgDRbM0svq.', 0x596173734c65424740676d61696c2e636f6d, '(514)-900-4578', 'avatar.png', 'Yes'),
+(2, 0x63726973, 'sdfsdf', 'jsfdjshdbgj', '$2y$10$g6wywWqdBXfnfY9KFTTzt.7EYSeT/ZBSQ8hv8H7LI/HBVkbCFfc.q', 0x63723740676d61696c2e636f6d, '(438)-438-438', 'handsome.png', 'Yes'),
+(5, 0x726f6e, 'Ronald', 'Raphael', '$2y$10$QQlcVtixb2jqvKVfsKZtjOOpxGFi1aLLIe5MoSJtZy8IodtZWR5Jy', 0x726f6e4076616e6965722e6361, '111', 'avatar.png', 'Yes'),
+(9, 0x4247, 'Yassine', 'El Yamani', '$2y$10$PRo8LqsGcThlGLanFdw80eKwrWL3o8E6H7bv198EaHl8/oDmEv9gK', 0x424740676d61696c2e636f6d, '438-566-1284', 'handsome.png', 'Yes'),
+(10, 0x5175697a, 'Q', 'Quest', '$2y$10$KshXVwjIQfG2n.ZvL1ftgekc6ToFyZMmnc0wa9BUOvctmwPrC0zcK', 0x5175697a40676d61696c2e636f6d, '123-456-7890', 'Messi.png', 'Yes'),
+(11, 0x515151, 'ssss', 'ddddd', '$2y$10$z98fUXsKWlQulDZODkwLnugQ.Hu/E5UUR29JgXYdMWrQlqICUAPjS', 0x5151514066656465782e6361, '514-555-9812', 'Messi.png', 'Yes'),
+(12, 0x717765727479, 'qqqq', 'qqqqq', '$2y$10$kaHm08.dBiBKijn8.c.rGueYJwFwkYMXCRkoiP8Y6w7vonn33GOvu', 0x71776572747940676d61696c2e636f6d, '514-788-5602', 'Messi.png', 'Yes');
 
 -- --------------------------------------------------------
 
@@ -214,7 +300,9 @@ INSERT INTO `user_rights` (`id`, `user_id`, `rights_id`) VALUES
 (2, 2, 'EZ_SLR02'),
 (5, 5, 'EZ_BYR05'),
 (9, 9, 'EZ_BYR05'),
-(10, 10, 'EZ_SLR02');
+(10, 10, 'EZ_SLR02'),
+(11, 11, 'EZ_SLR02'),
+(12, 12, 'EZ_ADM03');
 
 --
 -- Indexes for dumped tables
@@ -234,6 +322,14 @@ ALTER TABLE `car_features`
   ADD PRIMARY KEY (`id`),
   ADD KEY `car_id_FK` (`car_id`),
   ADD KEY `feature_id_FK` (`feature_id`);
+
+--
+-- Indexes for table `car_review`
+--
+ALTER TABLE `car_review`
+  ADD KEY `revcar_id_FK` (`car_id`),
+  ADD KEY `carrev_id_FK` (`review_id`),
+  ADD KEY `revuser_id_FK` (`user_id`);
 
 --
 -- Indexes for table `comment`
@@ -257,6 +353,12 @@ ALTER TABLE `orders`
 -- Indexes for table `payment`
 --
 ALTER TABLE `payment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `review`
+--
+ALTER TABLE `review`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -287,13 +389,13 @@ ALTER TABLE `user_rights`
 -- AUTO_INCREMENT for table `car`
 --
 ALTER TABLE `car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `car_features`
 --
 ALTER TABLE `car_features`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `comment`
@@ -311,7 +413,7 @@ ALTER TABLE `features`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -320,16 +422,22 @@ ALTER TABLE `payment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_rights`
 --
 ALTER TABLE `user_rights`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -347,6 +455,14 @@ ALTER TABLE `car`
 ALTER TABLE `car_features`
   ADD CONSTRAINT `car_id_FK` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`),
   ADD CONSTRAINT `feature_id_FK` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`);
+
+--
+-- Constraints for table `car_review`
+--
+ALTER TABLE `car_review`
+  ADD CONSTRAINT `carrev_id_FK` FOREIGN KEY (`review_id`) REFERENCES `review` (`id`),
+  ADD CONSTRAINT `revcar_id_FK` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`),
+  ADD CONSTRAINT `revuser_id_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `user_rights`

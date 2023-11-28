@@ -16,7 +16,7 @@ class UserController extends Controller{
         }else{
         if(isset($_POST['login'])){
             $newUser = $this->model('User')->findUsername($_POST['username']);
-            if($newUser!=null && password_verify($_POST['password'],$newUser->password)){
+            if($newUser!=null && $newUser->access == "Yes" && password_verify($_POST['password'],$newUser->password)){
                 $right = $this->model('User')->findRight($newUser->id);
                 $_SESSION['id'] = $newUser->id;
                 $_SESSION['username'] = $newUser->username;
@@ -25,7 +25,11 @@ class UserController extends Controller{
                 $_SESSION['picture'] = $newUser->picture;
                 header('location:/user/index');
             }else{
-                $this->view('user/login', 'Incorrect username/password combination!');
+                if(!empty($newUser) && $newUser->access == "No" && password_verify($_POST['password'],$newUser->password)){
+                      $this->view('user/login', 'Your account is blocked by the administration');
+                }else{
+                      $this->view('user/login', 'Incorrect username/password combination!');
+                }
             }
         }else{
             $this->view('user/login');
@@ -42,8 +46,8 @@ class UserController extends Controller{
         }else{
         if(isset($_POST['loginEmail'])){
             $newUser = $this->model('User')->findEmail($_POST['email']);
-            $right = $this->model('User')->findRight($newUser->id);
-            if($newUser!=null && password_verify($_POST['password'],$newUser->password)){
+            if($newUser!=null && $newUser->access == "Yes" && password_verify($_POST['password'],$newUser->password)){
+                $right = $this->model('User')->findRight($newUser->id);
                 $_SESSION['id'] = $newUser->id;
                 $_SESSION['username'] = $newUser->username;
                 $_SESSION['email'] = $newUser->email;
@@ -51,7 +55,11 @@ class UserController extends Controller{
                 $_SESSION['picture'] = $newUser->picture;
                 header('location:/user/index');
             }else{
-                $this->view('user/loginEmail', 'Incorrect email/password combination!');
+                if(!empty($newUser) && $newUser->access == "No"  && password_verify($_POST['password'],$newUser->password)){
+                    $this->view('user/loginEmail', 'Your account is blocked by the administration');
+              }else{
+                    $this->view('user/loginEmail', 'Incorrect username/password combination!');
+              }
             }
         }else{
             $this->view('user/loginEmail');
@@ -60,23 +68,50 @@ class UserController extends Controller{
     }
 
     public function update($id=0){
-        if(isset($_SESSION['username'])){
-            $id = $_SESSION['id'];
-            $theNewUser = $this->model('User')->find($id);
-        if(isset($_POST['edit'])){
-            $theNewUser->username = isset($_POST['username']) ? $_POST['username'] : $theNewUser->username;
-            $theNewUser->email = isset($_POST['email']) ? $_POST['email'] : $theNewUser->email;
-            $theNewUser->edit();
-            $_SESSION['username'] = $theNewUser->username;
-            $_SESSION['email'] = $theNewUser->email;
-            header('location:/user/index');
+        if($id>0 && $this->model('user')->find($id)){
+            if(isset($_SESSION['username'])){
+                $theNewUser = $this->model('User')->find($id);
+                if($_SESSION['right'] == "Admin"){
+                    $theNewUser = $this->model('User')->find($id);
+                    if(isset($_POST['edit'])){
+                        $theNewUser->username = isset($_POST['username']) ? $_POST['username'] : $theNewUser->username;
+                        $theNewUser->email = isset($_POST['email']) ? $_POST['email'] : $theNewUser->email;
+                        $theNewUser->edit();
+                        $_SESSION['username'] = $theNewUser->username;
+                        $_SESSION['email'] = $theNewUser->email;
+                        header('location:/user/index');
+                    }else{
+                        $this->view('user/update', $theNewUser);
+                    }
+                }else{
+                    $id = $_SESSION['id'];
+                    $theNewUser = $this->model('User')->find($id);
+                    if(isset($_POST['edit'])){
+                        $theNewUser->username = isset($_POST['username']) ? $_POST['username'] : $theNewUser->username;
+                        $theNewUser->email = isset($_POST['email']) ? $_POST['email'] : $theNewUser->email;
+                        $theNewUser->edit();
+                        $_SESSION['username'] = $theNewUser->username;
+                        $_SESSION['email'] = $theNewUser->email;
+                        header('location:/user/index');
+                    }else{
+                        $this->view('user/update', $theNewUser);
+                    }
+                }
+            }else{
+                $this->view('user/login', "You're not logged in. Please login to proceed");
+            }
         }else{
-            $this->view('user/update', $theNewUser);
-        }
-        }else{
-            $this->view('user/login', "You're not logged in. Please login to proceed");
+            if(isset($_SESSION['username'])){
+                $user = $this->model('user')->find($_SESSION['id']);
+                $this->view('user/index',['users'=>$user]);
+                header('location: /user/index');
+            }else{
+                $this->view('user/login','login to perform such action.');
+            }
         }
     }
+
+
     public function register(){
         if(isset($_SESSION['username'])){
             $User = $this->model('user')->find($_SESSION['id']);
@@ -110,8 +145,9 @@ class UserController extends Controller{
         }
     }
 
-    public function listing(){
-        $this->view("user/listing");
+    public function listing($id = 0){
+        $userCar = $this->model('car')->findByUser($id);
+        $this->view("user/listing", ['user'=>$userCar]);
     }
     
     public function logout(){
@@ -119,36 +155,27 @@ class UserController extends Controller{
         header("location: /user/login");
     }
 
-    public function buyers(){
+    public function AllUsers(){
         if(isset($_SESSION['username'])){
             if($_SESSION['right'] == "Admin"){
-                $user = $this->model('user')->findBuyer();
-                $this->view("user/buyers",$user);
-            }else{
-                header('location: /car/index');
-            }
-        }else{
-                header('location: /user/login');
-            }
-        }
-
-    public function sellers(){
-            if(isset($_SESSION['username'])){
-                if($_SESSION['right'] == "Admin"){
-                    $user = $this->model('user')->findSeller();
-                    $this->view("user/sellers",$user);
+                if(isset($_POST['USN'])){
+                    $user = $this->model('user')->findUserNoAdmin($_POST['uname']);
+                    $this->view("user/AllUsers",$user);
                 }else{
-                    header('location: /car/index');
-                }
-            }else{
-                header('location: /user/login');
-            }
-    }
-    public function AllUsers($id = 0){
-        if(isset($_SESSION['username'])){
-            if($_SESSION['right'] == "Admin"){
-                $user = $this->model('user')->All($id);
+                    $user1 = $this->model('user')->findAdmin();
+                    $i = 0;
+                    while($i<count($user1)){
+                        $user = $this->model('user')->All($user1[$i]->id);
+                        $i++;
+                    }
                 $this->view("user/AllUsers",$user);
+                }
+                if(isset($_POST['Block'])){
+                    $access = $this->model('user')->block($_POST['id']);
+                }
+                if(isset($_POST['Access'])){
+                    $access = $this->model('user')->access($_POST['id']);
+                }
             }else{
                 header('location: /car/index');
             }
