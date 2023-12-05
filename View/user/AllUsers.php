@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buyers list</title>
+    <title>Users list</title>
+    <?php
+    include 'View/includes/style.php';
+    ?>
 </head>
 <body>
 <?php
-    include 'View/includes/style.php';
     include 'View/includes/header.php';?>
 <h1><center>EzCarBuyer Users</center></h1>
 <form method="post">
@@ -62,6 +64,7 @@
         <form action="" method="post">
         <input type="hidden" name="id" value="<?= $user->id?>">
         <?php
+        if($user->rights != "Admin"){
         if($user->access == "Yes"){
         ?>
         <input type="submit" class="btn btn-danger" name="Block" value="Block">
@@ -74,7 +77,10 @@
         ?>
         </form>
         <a href="/user/update/<?= $user->id?>" class="btn btn-warning" style="margin-top:5px;">Edit</a>
-  </td>
+        <?php
+        }
+        ?>
+        </td>
 
     </tr>
     <?php

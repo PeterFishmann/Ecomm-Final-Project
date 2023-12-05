@@ -18,8 +18,9 @@ class OrderController extends Controller{
                 $newOrder->status = "In process";
                 $newOrder->price = $car->price;
                 $newOrder->add();
+                header('location: /order/index');
             }else{
-                echo "You cannot perform action";
+                header('location: /order/insert/'.$id);
             }
             
         }
@@ -42,6 +43,5 @@ class OrderController extends Controller{
             $this->view('order/update', $theNewOrder);
         }
     }
-
 }
 ?>

@@ -24,7 +24,8 @@
                         <li class="nav-item">
                             <label for="model"><b>Color</b></label>
                             <label></label>
-                            <input type="text" name="color" placeholder="Interior/exterior color" value="<?php if(isset($_POST['filter'])){echo $_POST['color'];}else{echo "";}?>">
+                            <input type="text" name="color1" placeholder="Interior color" value="<?php if(isset($_POST['filter'])){echo $_POST['color1'];}else{echo "";}?>">
+                            <input type="text" name="color2" placeholder="exterior color" value="<?php if(isset($_POST['filter'])){echo $_POST['color2'];}else{echo "";}?>">
                         </li>
                         <li class="nav-item">
                             <label for="year"><b>Year</b></label><br>

@@ -8,27 +8,27 @@ class CarController extends Controller {
                 $trim = explode(" ", $_POST['search']);
                 $status = isset($_POST['US']) ? $_POST['US'] : "";
                 if(count($trim) == 2){
-                    if($this->model('car')->findModel($trim[0],$trim[1],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color'], $_POST['color'], $status)){
-                        $items = $this->model('car')->findModel($trim[0],$trim[1],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color'], $_POST['color'], $status);
+                    if($this->model('car')->findModel($trim[0],$trim[1],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color1'], $_POST['color2'], $status)){
+                        $items = $this->model('car')->findModel($trim[0],$trim[1],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color1'], $_POST['color2'], $status);
                         $this->view("car/index", ['cars'=>$items]);
                     }else{
-                        if($this->model('car')->findModel($trim[1],$trim[0],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color'], $_POST['color'], $status)){
-                            $items = $this->model('car')->findModel($trim[1],$trim[0],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color'], $_POST['color'], $status);
+                        if($this->model('car')->findModel($trim[1],$trim[0],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color1'], $_POST['color2'], $status)){
+                            $items = $this->model('car')->findModel($trim[1],$trim[0],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color1'], $_POST['color2'], $status);
                             $this->view("car/index", ['cars'=>$items]);
                         }else{
                             $this->view("car/index", "Nothing found with the inputted filters");
                         }
                     }
                 }else if(count($trim) == 1){
-                    if($this->model('car')->findCar($_POST['search'],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color'], $_POST['color'], $status)){
-                        $items = $this->model('car')->findCar($_POST['search'],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color'], $_POST['color'], $status);
+                    if($this->model('car')->findCar($_POST['search'],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color1'], $_POST['color2'], $status)){
+                        $items = $this->model('car')->findCar($_POST['search'],$_POST['minYEAR'],$_POST['maxYEAR'],$_POST['min'],$_POST['max'], $_POST['color1'], $_POST['color2'], $status);
                         $this->view("car/index", ['cars'=>$items]);
                     }else{
                         $this->view("car/index", "Nothing found with the inputted filters");
                     }
                 }else{
                     $this->view("car/index", "Nothing found with the inputted filters");
-                } 
+                }
                 
             }
     }
@@ -78,37 +78,12 @@ class CarController extends Controller {
                 $NewCar->status = $_POST['rd'];
                 $NewCar->picture = empty($_POST['pic']) ? "NoImage.png" : $_POST['pic'];
                 $NewCar->create();
-                header('location: /car/addFeature');
+                header('location: /feature/index');
             }else{
                 $this->view('car/create', "Please fill every field to be able to create a car!");
             }
             }else{
                 $this->view('car/create');
-            }
-        }else{
-            header('location: /car/index');
-        }
-    }
-
-    public function addFeature(){
-        if(isset($_SESSION['username']) && $_SESSION['right'] != "Buyer"){
-            if(isset($_POST['confirm'])){
-                $i = 1;
-                while($i<=20){
-                    if(isset($_POST["$i"])){
-                        $car = $this->model('Car')->findDesc($_SESSION['id']);
-                        $id = $this->model('features')->findByFt($_POST["$i"]);
-                        $newFeat = $this->model('car_features');
-                        $newFeat->car_id = $car[0]->id;
-                        $newFeat->feature_id = $id->id;
-                        $newFeat->add();
-                        header('location: /car/index');
-                    }
-                    $i++;
-                }
-            }else{
-                $features = $this->model('Features')->get();
-                $this->view("car/addFeature",['features'=>$features]);
             }
         }else{
             header('location: /car/index');
@@ -127,17 +102,6 @@ class CarController extends Controller {
         }else{
             header("location: /user/login");
         }
-    }
-
-    public function detail($id = 0){
-        $car = $this->model('car')->find($id);
-        $this->view("car/detail",$car);
-    }
-
-    public function review($id = 0){
-        $car = $this->model('car')->find($id);
-        var_dump($car);
-        //$this->view('car/review');
     }
 }
 ?>

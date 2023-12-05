@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?=$_SESSION['username']?> cars</title>
+    <?php
+    include 'View/includes/style.php';
+    ?>
 </head>
 <body>
     <?php
-    include 'View/includes/style.php';
     include 'View/includes/header.php';
     ?>
     <div class="container mt-5">

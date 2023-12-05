@@ -30,6 +30,7 @@
                         <div class="card-body text-center">
                             <h4 class="card-title"><?= $data->price ?>$</h4>
                             <form action="" method="post">
+                            <a href="/comment/insert/<?=$data->id?>" class="btn btn-warning btn-sm">Leave a comment</a>
                             <input type="submit" class="btn btn-primary btn-sm" name="Add" value="Add to cart">
                             <a href="/car/index" class="btn btn-danger btn-sm">Cancel action</a>
                             </form>

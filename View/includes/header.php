@@ -28,33 +28,46 @@
           if($_SESSION['right'] == "Admin"){
             ?>
           <li class="nav-item">
-            <a class="nav-link active" href="/user/listing/<?= $_SESSION['id']?>">My cars</a>
+            <a class="nav-link active" href="/user/listing">My cars</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="/order/index">My orders</a>
           </li>
           <div class="dropdown">
             <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Comments
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/comment/viewComments">View mine</a>
+              <a class="dropdown-item" href="/comment/ReadAll">View All</a>
+              <a class="dropdown-item" href="/comment/index">Main</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Users
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="/user/AllUsers/<?= $_SESSION['id']?>">All Users</a>
+              <a class="dropdown-item" href="/user/AllUsers">All Users</a>
             </div>
           </div>
           <?php
           }elseif($_SESSION['right'] == "Seller"){
           ?>
           <li class="nav-item">
-            <a class="nav-link active" href="/user/listing/<?= $_SESSION['id']?>">My cars</a>
+            <a class="nav-link active" href="/user/listing">My cars</a>
           </li>
+          <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Comments
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/comment/viewComments">Read</a>
+              <a class="dropdown-item" href="/comment/index">Main</a>
+            </div>
+          </div>
           <li class="nav-item">
-            <a class="nav-link active" href="">My profit</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="">View comments</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="">View reviews</a>
+            <a class="nav-link active" href="/review/index">Reviews</a>
           </li>
           <?php
           }else{
@@ -63,7 +76,7 @@
           <a class="nav-link active" href="/order/index">My orders</a>
           </li>
           <li class="nav-item">
-          <a class="nav-link active" href="">My reviews</a>
+          <a class="nav-link active" href="/review/index">My reviews</a>
           </li>
           <li class="nav-item">
           <a class="nav-link active" href="">My comments</a>

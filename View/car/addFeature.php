@@ -4,19 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add features</title>
+    <?php
+    include 'View/includes/style.php';
+    ?>
 </head>
 <body>
     <?php
-    include 'View/includes/style.php';
     include 'View/includes/header.php';
     ?>
     <h1>It's time to add some features to your car</h1>
-    <?php
-    if(!is_array($data)){
-            echo "<div class='alert alert-warning' role='alert'>$data</div>";
-    }
-    ?>
-        <table class="table">
+    <table class="table">
         <th>Feature</th>
         <th>Description</th>
         <th>Yes/No</th>

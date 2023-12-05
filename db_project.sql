@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2023 at 05:45 PM
+-- Generation Time: Dec 05, 2023 at 06:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -47,10 +47,10 @@ CREATE TABLE `car` (
 
 INSERT INTO `car` (`id`, `user_id`, `make`, `model`, `year`, `price`, `ext_col`, `int_col`, `distance`, `status`, `picture`) VALUES
 (27, 1, 'Mclaren', 'M43', 2023, 400000, 'Black', 'Green', 0, 'New', 'Mclaren.png'),
-(28, 1, 'Nissan', 'Rogue', 2023, 38000, 'Orange', 'Black', 0, 'New', 'BrownNissanRogue2023.png'),
-(29, 1, 'Hyundai', 'Accent', 2023, 36000, 'Dark blue', 'Black', 0, 'New', 'HyundaiAccent2023Blue.png'),
-(32, 2, 'Lamborghini', 'Aventador', 2022, 280000, 'Green', 'Black', 500, 'Used', 'WhiteToyotaRAV42015.png'),
-(33, 1, 'Toyota', 'Kango', 2023, 4000, 'Black', 'grey', 0, 'New', 'NoImage.png');
+(32, 2, 'Toyota', 'Rav-4', 2022, 18000, 'Green', 'Black', 500, 'Used', 'WhiteToyotaRAV42015.png'),
+(33, 1, 'Toyota', 'Kango', 2023, 4000, 'Black', 'grey', 0, 'New', 'NoImage.png'),
+(34, 1, 'Mclaren', 'Rogue', 2015, 10000, 'Black', 'Black', 120000, 'Used', 'blackHondaCivic2008.png'),
+(35, 1, 'Hyundai', 'Accent', 2023, 36000, 'Dark blue', 'Black', 0, 'New', 'HyundaiAccent2023Blue.png');
 
 -- --------------------------------------------------------
 
@@ -75,19 +75,6 @@ INSERT INTO `car_features` (`id`, `car_id`, `feature_id`) VALUES
 (45, 27, 7),
 (46, 27, 9),
 (47, 27, 12),
-(48, 28, 1),
-(49, 28, 2),
-(50, 28, 3),
-(51, 28, 4),
-(52, 28, 5),
-(53, 28, 6),
-(54, 29, 1),
-(55, 29, 2),
-(56, 29, 3),
-(57, 29, 4),
-(58, 29, 5),
-(59, 29, 6),
-(60, 29, 7),
 (62, 32, 1),
 (63, 32, 2),
 (64, 32, 3),
@@ -97,7 +84,9 @@ INSERT INTO `car_features` (`id`, `car_id`, `feature_id`) VALUES
 (68, 33, 1),
 (69, 33, 3),
 (70, 33, 5),
-(71, 33, 7);
+(71, 33, 7),
+(72, 34, 1),
+(73, 34, 3);
 
 -- --------------------------------------------------------
 
@@ -123,8 +112,18 @@ CREATE TABLE `comment` (
   `user_id` int(11) NOT NULL,
   `comment` varchar(500) NOT NULL,
   `date` date NOT NULL,
-  `car_id` int(11) NOT NULL
+  `car_id` int(11) NOT NULL,
+  `receiver` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`id`, `user_id`, `comment`, `date`, `car_id`, `receiver`) VALUES
+(1, 1, "What's your address", '2023-12-03', 32, 'cris'),
+(2, 1, "What's the fuel consumption?", '2023-12-03', 32, 'cris'),
+(3, 12, "Wa fin a bono?", '2023-12-05', 27, 'nimayale045');
 
 -- --------------------------------------------------------
 
@@ -162,7 +161,10 @@ INSERT INTO `features` (`id`, `features`, `description`) VALUES
 (17, 'Adaptive Cruise Control', 'Automatically adjusts speed to maintain a safe following distance.'),
 (18, 'Automatic Emergency Braking', 'Applies the brakes in emergency situations.'),
 (19, 'Rear Spoiler', 'Enhances aerodynamics and sporty appearance.'),
-(20, 'Tinted Windows', 'Provides privacy and blocks out excess sunlight.');
+(20, 'Tinted Windows', 'Provides privacy and blocks out excess sunlight.'),
+(21, 'flame exhaust', 'Flames come out of the exhaust.'),
+(22, 'flame exhaust', 'Flames come out of the exhaust.'),
+(23, 'flame exhaust', 'Flames come out of the exhaust.');
 
 -- --------------------------------------------------------
 
@@ -183,11 +185,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `car_id`, `status`, `price`) VALUES
-(1, 1, 18, 'Not paid', 2300),
-(2, 5, 27, 'Pending', 0),
-(3, 1, 32, 'Pending', 0),
-(4, 12, 28, 'Pending', 38000),
-(5, 5, 33, 'In process', 4000);
+(1, 5, 27, 'In process', 400000);
 
 -- --------------------------------------------------------
 
@@ -213,8 +211,8 @@ CREATE TABLE `payment` (
 
 CREATE TABLE `review` (
   `id` int(11) NOT NULL,
-  `stars` int(1) NOT NULL,
-  `term` varchar(10) NOT NULL
+  `stars` int(2) NOT NULL,
+  `term` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -222,7 +220,7 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`id`, `stars`, `term`) VALUES
-(1, 1, 'Very bad'),
+(1, 1, 'Very Bad'),
 (2, 2, 'Bad'),
 (3, 3, 'good'),
 (4, 4, 'Very good'),
@@ -335,7 +333,9 @@ ALTER TABLE `car_review`
 -- Indexes for table `comment`
 --
 ALTER TABLE `comment`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userid_FK` (`user_id`),
+  ADD KEY `Cid_FK` (`car_id`);
 
 --
 -- Indexes for table `features`
@@ -347,7 +347,9 @@ ALTER TABLE `features`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `car_id` (`car_id`),
+  ADD KEY `ord_user_id_FK` (`user_id`);
 
 --
 -- Indexes for table `payment`
@@ -389,31 +391,31 @@ ALTER TABLE `user_rights`
 -- AUTO_INCREMENT for table `car`
 --
 ALTER TABLE `car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `car_features`
 --
 ALTER TABLE `car_features`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `features`
 --
 ALTER TABLE `features`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -425,7 +427,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -463,6 +465,20 @@ ALTER TABLE `car_review`
   ADD CONSTRAINT `carrev_id_FK` FOREIGN KEY (`review_id`) REFERENCES `review` (`id`),
   ADD CONSTRAINT `revcar_id_FK` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`),
   ADD CONSTRAINT `revuser_id_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `Cid_FK` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`),
+  ADD CONSTRAINT `userid_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `ord_car_id_FK` FOREIGN KEY (`car_id`) REFERENCES `car` (`id`),
+  ADD CONSTRAINT `ord_user_id_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `user_rights`

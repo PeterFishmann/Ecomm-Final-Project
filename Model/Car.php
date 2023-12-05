@@ -63,7 +63,7 @@ class Car extends Model{
     }
 
     public function findCar($make,$minYear,$maxYear,$minDistance, $maxDistance, $int, $ext, $stat){
-        $SQL = "SELECT * FROM car WHERE (make like :make OR model like :make) AND (year >= :year AND year <= :Year) AND (distance >= :distance AND distance <= :Distance) AND (int_col like :color OR ext_col like :Color) AND (status like :status)";
+        $SQL = "SELECT * FROM car WHERE (make like :make OR model like :make) AND (year >= :year AND year <= :Year) AND (distance >= :distance AND distance <= :Distance) AND (int_col like :color AND ext_col like :Color) AND (status like :status)";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['make'=>'%'.$make.'%',
                         'year'=>$minYear,
@@ -78,7 +78,7 @@ class Car extends Model{
     }
 
     public function findModel($make, $model,$minYear,$maxYear,$minDistance, $maxDistance, $int,$ext, $stat){
-        $SQL = "SELECT * FROM car WHERE (make like :make AND model like :model) AND (year >= :year AND year <= :Year) AND (distance >= :distance AND distance <= :Distance) AND (int_col like :color OR ext_col like :Color) AND (status like :status)";
+        $SQL = "SELECT * FROM car WHERE (make like :make AND model like :model) AND (year >= :year AND year <= :Year) AND (distance >= :distance AND distance <= :Distance) AND (int_col like :color AND ext_col like :Color) AND (status like :status)";
         $stmt = self::$_conn->prepare($SQL);
         $stmt->execute(['make'=>'%'.$make.'%',
                         'model'=>'%'.$model.'%',

@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of items</title>
+    <title>Car Catalog</title>
+    <?php
+    include 'View/includes/style.php';
+    ?>
 </head>
 <body>
     <?php
-    include 'View/includes/style.php';
     include 'View/includes/header.php';
     include 'View/includes/sidebar.php';
-
-    
     ?>
     <div class="container mt-5">
         <h1 class="text-center">Car Catalog</h1>
@@ -73,9 +73,7 @@
                                 ?>
                                 <a href="/user/login" class="btn btn-primary btn-sm">Buy</a>
                                 <?php
-                            }?>
-                            <a href="/car/detail/<?= $item->id ?>" class="btn btn-primary btn-sm">Detail</a>
-                            <?php
+                            }
                             if (isset($_SESSION['username']) && ($_SESSION['right'] == "Admin" || $_SESSION['id'] == $item->user_id)) {
                             ?>
                                 <a href="/car/edit/<?= $item->id ?>" class="btn btn-primary btn-sm">Edit</a>

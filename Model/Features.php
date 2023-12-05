@@ -20,6 +20,15 @@ class Features extends Model{
     return $stmt->fetch();
  }
 
+ public function add(){
+   $sql = "INSERT INTO features (id, features, description) VALUES (:id, :features, :description)";
+    $stmt = self::$_conn->prepare($sql);
+    $stmt->execute(['id'=>$this->id,
+                    'features'=>$this->features,
+                    'description'=>$this->description]);
+    return $stmt;
+ }
+
 
 
     

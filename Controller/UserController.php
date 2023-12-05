@@ -145,9 +145,18 @@ class UserController extends Controller{
         }
     }
 
-    public function listing($id = 0){
-        $userCar = $this->model('car')->findByUser($id);
-        $this->view("user/listing", ['user'=>$userCar]);
+    public function listing(){
+        if(isset($_SESSION['username'])){
+            if($_SESSION != "Buyer"){
+                $userCar = $this->model('car')->findByUser($_SESSION['id']);
+                $this->view("user/listing", ['user'=>$userCar]);
+            }else{
+                header('location: /car/index');
+            }
+        }else{
+            header("location: /user/login");
+        }
+        
     }
     
     public function logout(){
@@ -162,13 +171,8 @@ class UserController extends Controller{
                     $user = $this->model('user')->findUserNoAdmin($_POST['uname']);
                     $this->view("user/AllUsers",$user);
                 }else{
-                    $user1 = $this->model('user')->findAdmin();
-                    $i = 0;
-                    while($i<count($user1)){
-                        $user = $this->model('user')->All($user1[$i]->id);
-                        $i++;
-                    }
-                $this->view("user/AllUsers",$user);
+                    $user = $this->model('user')->All();
+                    $this->view("user/AllUsers",$user);
                 }
                 if(isset($_POST['Block'])){
                     $access = $this->model('user')->block($_POST['id']);

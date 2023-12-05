@@ -43,9 +43,10 @@ class User extends Model{
     }
 
     public function findUserNoAdmin($username){
-        $SQL = "SELECT * FROM user  JOIN user_rights ON user.id = user_rights.user_id JOIN rights ON user_rights.rights_id = rights.id WHERE username like :username AND rights.rights != 'Admin' ORDER BY user.id asc";
+        $SQL = "SELECT * FROM user  JOIN user_rights ON user.id = user_rights.user_id JOIN rights ON user_rights.rights_id = rights.id WHERE username like :username AND user.id != :id ORDER BY user.id asc";
         $stmt = self::$_conn->prepare($SQL);
-        $stmt->execute(['username'=>'%'.$username.'%']);
+        $stmt->execute(['username'=>'%'.$username.'%',
+                        'id'=>$_SESSION['id']]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
         return $stmt->fetchAll();
     }
@@ -103,10 +104,10 @@ class User extends Model{
         $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
         return $stmt->fetchAll();
     }
-    public function All($id){
-        $sql = "SELECT user.id, fname, lname, email, username, phone, picture,rights.rights, access FROM user JOIN user_rights ON user.id = user_rights.user_id JOIN rights ON user_rights.rights_id = rights.id WHERE user.id != :id AND rights.rights != 'Admin' ORDER BY user.id asc";
+    public function All(){
+        $sql = "SELECT user.id, fname, lname, email, username, phone, picture,rights.rights, access FROM user JOIN user_rights ON user.id = user_rights.user_id JOIN rights ON user_rights.rights_id = rights.id WHERE user.id != :id ORDER BY user.id asc";
         $stmt = self::$_conn->prepare($sql);
-        $stmt->execute(['id'=>$id]);
+        $stmt->execute(['id'=>$_SESSION['id']]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'User');
         return $stmt->fetchAll();
     }

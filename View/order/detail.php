@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Features of your car</title>
+    <?php
+    include 'View/includes/style.php';
+    ?>
 </head>
 <?php
-    include 'View/includes/style.php';
     include 'View/includes/header.php';
     ?>
 <body>
