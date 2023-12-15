@@ -10,6 +10,7 @@
 </head>
 <body>
     <?php
+    include 'View/includes/header.php';
     if(!is_array($data)){
         echo "<div class='alert alert-warning' role='alert'>$data</div>";
     }
@@ -17,7 +18,7 @@
     <form method="post">
         <div class="input">
             <label for="">Stars</label>
-            <input type="number" name="num" min="1" max="10" value="1">
+            <input type="number" name="num" min="1" max="5" value="1">
         </div>
         <div class="input">
             <label for="">Term</label>

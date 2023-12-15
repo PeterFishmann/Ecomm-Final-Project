@@ -29,7 +29,6 @@
         </form>
         <form method="post">
             <input type="hidden" name="id" value="<?=$data->id?>">
-            <input type="submit" class="btn btn-primary" name="delete" onclick="return confirm('Confirm your action of deleting <?=$data->stars.' '.$data->term?>');" value="Remove">
         </form>
     </div>
 

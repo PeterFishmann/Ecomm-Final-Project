@@ -8,9 +8,11 @@ class OrderController extends Controller{
     public function insert($id=0){
         if(!isset($_POST['Add'])){
             $car = $this->model('car')->find($id);
-            $this->view('order/insert',$car);
+            $rating = $this->model('car_review')->avg($id);
+            $this->view('order/insert',['car'=>$car,'rating'=>$rating]);
         }else{
-            if($this->model('order')->findCar($id, $_SESSION['id']) == null){
+            var_dump($this->model('order')->findCar($id));
+            if(!$this->model('order')->findCar($id)){
                 $car = $this->model('car')->find($id);
                 $newOrder = $this->model('order');
                 $newOrder->user_id = $_SESSION['id'];

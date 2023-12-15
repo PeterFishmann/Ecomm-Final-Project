@@ -53,7 +53,6 @@
                     <div class="col-md-3">
                         <div class="card-body text-center">
                             <h4 class="card-title"><?= $item->price ?>$</h4>
-                            <h6 class="text-success"><?= ($item->price <= 10000) ? 'Great deal' : 'Could negotiate with you' ?></h6>
                             <?php
                             if(isset($_SESSION['username']) && $_SESSION['right'] != "Seller" && $item->user_id != $_SESSION['id']){
                             ?>
@@ -65,7 +64,6 @@
                                 
                                 <?php
                             }?>
-                            <a href="/car/detail/<?= $item->id ?>" class="btn btn-primary btn-sm">Detail</a>
                             <?php
                             if (isset($_SESSION['username']) && ($_SESSION['right'] == "Admin" || $_SESSION['id'] == $item->user_id)) {
                             ?>

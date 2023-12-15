@@ -13,12 +13,28 @@
 include 'View/includes/header.php';
 ?>
     <h1>Review terms</h1>
+    <?php
+    if(isset($_SESSION['username']) && $_SESSION['right'] == "Admin"){
+        ?><a href="/review/insert" class="btn btn-primary btn-sm">Add</a><?php
+    }
+    ?>
     <div class="list">
     <ul>
         <?php foreach ($data['review'] as $rev): ?>
             <li>
                 <p class="stars">&#9733; <?=$rev->stars?></p>
                 <p><?=$rev->term?></p>
+                <?php
+                if(isset($_SESSION['username']) && $_SESSION['right'] == "Admin"){
+                ?>
+                <form method="post">
+                    <a href="/review/edit/<?=$rev->id?>" class="btn btn-success btn-sm">Edit</a>
+                    <input type="hidden" name="id" value="<?=$rev->id?>">
+                    <input type="submit" class="btn btn-danger btn-sm" name="delete" value="Delete">
+                </form>
+                <?php
+                }                
+                ?>
             </li>
         <?php endforeach; ?>
     </ul>

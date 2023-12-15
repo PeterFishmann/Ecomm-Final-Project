@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2023 at 06:03 AM
+-- Generation Time: Dec 15, 2023 at 04:33 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -98,8 +98,21 @@ CREATE TABLE `car_review` (
   `id` int(11) NOT NULL,
   `car_id` int(11) NOT NULL,
   `review_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `comment` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `car_review`
+--
+
+INSERT INTO `car_review` (`id`, `car_id`, `review_id`, `user_id`, `comment`) VALUES
+(1, 32, 4, 1, 'Nice and reliable car'),
+(2, 32, 3, 1, 'Very average car'),
+(3, 27, 5, 5, "Damn it's so fast"),
+(4, 35, 3, 5, 'Not fast as expected'),
+(5, 33, 4, 5, "Only issue it doesn't have a picture"),
+(6, 34, 9, 5, 'Breaks down everyday');
 
 -- --------------------------------------------------------
 
@@ -123,7 +136,7 @@ CREATE TABLE `comment` (
 INSERT INTO `comment` (`id`, `user_id`, `comment`, `date`, `car_id`, `receiver`) VALUES
 (1, 1, "What's your address", '2023-12-03', 32, 'cris'),
 (2, 1, "What's the fuel consumption?", '2023-12-03', 32, 'cris'),
-(3, 12, "Wa fin a bono?", '2023-12-05', 27, 'nimayale045');
+(3, 12, 'Wa fin a bono?', '2023-12-05', 27, 'nimayale045');
 
 -- --------------------------------------------------------
 
@@ -185,7 +198,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `car_id`, `status`, `price`) VALUES
-(1, 5, 27, 'In process', 400000);
+(1, 5, 27, 'In process', 400000),
+(3, 1, 32, 'In process', 18000),
+(4, 5, 33, 'In process', 4000),
+(5, 5, 34, 'In process', 10000);
 
 -- --------------------------------------------------------
 
@@ -220,11 +236,11 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`id`, `stars`, `term`) VALUES
-(1, 1, 'Very Bad'),
 (2, 2, 'Bad'),
 (3, 3, 'good'),
 (4, 4, 'Very good'),
-(5, 5, 'Excellent');
+(5, 5, 'Excellent'),
+(9, 1, 'Very Bad');
 
 -- --------------------------------------------------------
 
@@ -325,6 +341,7 @@ ALTER TABLE `car_features`
 -- Indexes for table `car_review`
 --
 ALTER TABLE `car_review`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `revcar_id_FK` (`car_id`),
   ADD KEY `carrev_id_FK` (`review_id`),
   ADD KEY `revuser_id_FK` (`user_id`);
@@ -400,6 +417,12 @@ ALTER TABLE `car_features`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
+-- AUTO_INCREMENT for table `car_review`
+--
+ALTER TABLE `car_review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
@@ -415,7 +438,7 @@ ALTER TABLE `features`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -427,7 +450,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user`

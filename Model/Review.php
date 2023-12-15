@@ -22,7 +22,7 @@ public function edit(){
 }
 
 public function view(){
-    $sql = "SELECT * FROM review";
+    $sql = "SELECT * FROM review ORDER BY stars asc";
     $stmt = self::$_conn->prepare($sql);
     $stmt->execute([]);
     $stmt->setFetchMode(PDO::FETCH_CLASS,'Review');

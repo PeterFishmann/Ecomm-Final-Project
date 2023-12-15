@@ -40,7 +40,6 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="/comment/viewComments">View mine</a>
               <a class="dropdown-item" href="/comment/ReadAll">View All</a>
-              <a class="dropdown-item" href="/comment/index">Main</a>
             </div>
           </div>
           <div class="dropdown">
@@ -49,6 +48,15 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="/user/AllUsers">All Users</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Reviews
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/review/index">Index</a>
+              <a class="dropdown-item" href="/review/ReadAll">View All</a>
             </div>
           </div>
           <?php
@@ -63,7 +71,6 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="/comment/viewComments">Read</a>
-              <a class="dropdown-item" href="/comment/index">Main</a>
             </div>
           </div>
           <li class="nav-item">
@@ -79,7 +86,7 @@
           <a class="nav-link active" href="/review/index">My reviews</a>
           </li>
           <li class="nav-item">
-          <a class="nav-link active" href="">My comments</a>
+          <a class="nav-link active" href="/comment/viewComments">My comments</a>
           </li>
           <?php
           }

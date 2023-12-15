@@ -51,11 +51,10 @@ class Order extends Model{
         return $stmt->fetch();
     }
 
-    public function findCar($id,$id1){
-        $SQL = "SELECT * FROM orders WHERE car_id = :id AND user_id = :id1";
+    public function findCar($id){
+        $SQL = "SELECT * FROM orders WHERE car_id = :id";
         $stmt = self::$_conn->prepare($SQL);
-        $stmt->execute(['id'=>$id,
-                        'id1'=>$id1]);
+        $stmt->execute(['id'=>$id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS,'Order');
         return $stmt->fetchAll();
     }

@@ -18,9 +18,10 @@
     <th>Car</th>
     <th>status</th>
     <th>Price</th>
+    <th>Action</th>
         <?php
             foreach($data['order'] as $order){
-                echo "<tr><td>$order->user_id</td><td>$order->car_id</td><td>$order->status</td><td>$order->price</td><td><a href='/order/update/$order->id'>Edit</a></td></tr>";
+                echo "<tr><td>$order->user_id</td><td>$order->car_id</td><td>$order->status</td><td>$order->price</td><td><a class='btn btn-primary btn-sm' href='/review/write/$order->car_id'>Review</a></td></tr>";
             }
         ?>
         </table>

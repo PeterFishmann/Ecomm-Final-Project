@@ -38,15 +38,6 @@
                     <div class="col-md-6">
                         <div class="card-body">
                             <h5 class="card-title"><?= $item->make ?> <?= $item->model ?></h5>
-                            <div class="d-flex flex-row">   
-                                <div class="ratings mr-2">
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star text-warning"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
                             <div class="spec-1">
                                 <span><b>Interior:</b> <?= $item->int_col ?></span>
                                 <span class="dot"></span>

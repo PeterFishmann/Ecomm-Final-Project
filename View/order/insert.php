@@ -16,21 +16,38 @@
     <div class="card mb-3">
                 <div class="row no-gutters">
                     <div class="col-md-3">
-                        <img src="../../Images/cars/<?= $data->picture ?>" width="250px" height="250px" class="img-fluid rounded product-image">
+                        <img src="../../Images/cars/<?= $data['car']->picture ?>" width="250px" height="250px" class="img-fluid rounded product-image">
                     </div>
                     <div class="col-md-6">
                         <div class="card-body">
-                            <h5 class="card-title"><?= $data->make ?> <?= $data->model ?></h5>
+                            <h5 class="card-title"><?= $data['car']->make ?> <?= $data['car']->model ?></h5>
+                            <div class="d-flex flex-row">   
+                                <div class="ratings mr-2">
+                                    <?php
+                                    $i = 0;
+                                    $a = 5 - intval($data['rating']->avg);
+                                    while(intval($data['rating']->avg)>$i){
+                                        echo '<i class="fa fa-star text-warning"></i>';
+                                        $i++;
+                                    }
+                                    $i = 0;
+                                    while($i<$a){
+                                        echo '<i class="fa fa-star"></i>';
+                                        $i++;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
                             <div class="spec-1">
-                                <p>This car is <?=$data->status?> and has traveled <?=$data->distance?> Km. It costs <?=$data->price?>$ because of its unique and great <a href="/order/detail/<?=$data->id?>">features</a></p>
+                                <p>This car is <?=$data['car']->status?> and has traveled <?=$data['car']->distance?> Km. It costs <?=$data['car']->price?>$ because of its unique and great <a href="/order/detail/<?=$data['car']->id?>">features</a></p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card-body text-center">
-                            <h4 class="card-title"><?= $data->price ?>$</h4>
+                            <h4 class="card-title"><?= $data['car']->price ?>$</h4>
                             <form action="" method="post">
-                            <a href="/comment/insert/<?=$data->id?>" class="btn btn-warning btn-sm">Leave a comment</a>
+                            <a href="/comment/insert/<?=$data['car']->id?>" class="btn btn-warning btn-sm">Leave a comment</a>
                             <input type="submit" class="btn btn-primary btn-sm" name="Add" value="Add to cart">
                             <a href="/car/index" class="btn btn-danger btn-sm">Cancel action</a>
                             </form>
